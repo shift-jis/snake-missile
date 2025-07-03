@@ -34,4 +34,5 @@ func main() {
 	missileManager.InitializeListeners()
 	missileManager.StartConnections()
 	missileManager.ManageConnections()
+	missileManager.WaitGroup.Wait()
 }

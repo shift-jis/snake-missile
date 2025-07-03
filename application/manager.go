@@ -44,9 +44,9 @@ func (manager *MissileManager) InitializeEarthworms() error {
 		return err
 	}
 
-	manager.Earthworms = make([]*Earthworm, len(proxyList))
-	for index := 0; index < len(proxyList); index++ {
-		manager.Earthworms[index] = NewEarthworm(manager, proxyList[index])
+	manager.Earthworms = make([]*Earthworm, len(proxyList)*manager.Properties.BotsPerProxy)
+	for index := 0; index < len(proxyList)*manager.Properties.BotsPerProxy; index++ {
+		manager.Earthworms[index] = NewEarthworm(manager, proxyList[index%len(proxyList)])
 	}
 
 	return nil
@@ -141,8 +141,6 @@ func (manager *MissileManager) StartConnections() {
 			manager.ConnectToServer(earthworm)
 		}(earthworm)
 	}
-
-	manager.WaitGroup.Wait()
 }
 
 func (manager *MissileManager) ManageConnections() {

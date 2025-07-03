@@ -10,6 +10,7 @@ import (
 type ProgramProperties struct {
 	ServerAddress string `json:"server_address"`
 	ProxyListPath string `json:"proxy_list_path"`
+	BotsPerProxy  int    `json:"bots_per_proxy"`
 }
 
 func (properties *ProgramProperties) ReadProxyList() ([]string, error) {

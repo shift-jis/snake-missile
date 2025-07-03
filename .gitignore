@@ -1,5 +1,20 @@
-# Created by https://www.toptal.com/developers/gitignore/api/goland+all
-# Edit at https://www.toptal.com/developers/gitignore?templates=goland+all
+# Created by https://www.toptal.com/developers/gitignore/api/goland+all,git,text
+# Edit at https://www.toptal.com/developers/gitignore?templates=goland+all,git,text
+
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
 
 ### GoLand+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -89,4 +104,17 @@ fabric.properties
 !.idea/codeStyles
 !.idea/runConfigurations
 
-# End of https://www.toptal.com/developers/gitignore/api/goland+all
+### Text ###
+*.doc
+*.docx
+*.log
+*.msg
+*.pages
+*.rtf
+*.txt
+*.wpd
+*.wps
+*.json
+*.xml
+
+# End of https://www.toptal.com/developers/gitignore/api/goland+all,git,text

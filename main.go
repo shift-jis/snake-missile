@@ -1,28 +1,37 @@
 package main
 
 import (
-	"flag"
-	"time"
-	"torpedo/internal/torpedo"
+	"errors"
+	"log"
+	"os"
+
+	"github.com/jessevdk/go-flags"
+	"github.com/shift-jis/snake-missile/application"
 )
 
 func main() {
-	configPath := flag.String("config", "config.json", "")
-	flag.Parse()
+	var arguments application.ProgramArguments
+	flagParser := flags.NewParser(&arguments, flags.Default)
+	if _, err := flagParser.Parse(); err != nil {
+		var flagsErr *flags.Error
+		if errors.As(err, &flagsErr) && errors.Is(flagsErr.Type, flags.ErrHelp) {
+			os.Exit(0)
+		}
+		os.Exit(1)
+	}
 
-	config, err := torpedo.ParseConfig(*configPath)
+	properties, err := arguments.LoadProperties()
 	if err != nil {
+		log.Fatalf("Failed to load properties: %v", err)
+	}
+
+	missileManager := application.NewMissileManager(properties)
+	if err = missileManager.InitializeEarthworms(); err != nil {
+		log.Fatalf("Failed to initialize earthworms: %v", err)
 		return
 	}
 
-	proxies := config.ParseProxies()
-	context := torpedo.NewWormManager(config.ServerAddress, proxies, config.PointOffset, 5*(len(proxies)+1))
-	go torpedo.StartSyncServerLocation(context)
-
-	context.RegisterWorms()
-	context.StartConnect()
-	go context.StartRoutine()
-
-	time.Sleep(time.Second)
-	context.WaitGroup.Wait()
+	missileManager.InitializeListeners()
+	missileManager.StartConnections()
+	missileManager.ManageConnections()
 }

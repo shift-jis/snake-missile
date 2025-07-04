@@ -32,7 +32,7 @@ func NewMissileManager(properties *ProgramProperties) *MissileManager {
 		Logger:     utilities.MustDevelopmentLogger(),
 
 		ListenerFunctions: make(map[int]ListenerFunc),
-		ConnectedChan:     make(chan *Earthworm, 100),
+		ConnectedChan:     make(chan *Earthworm, 3000),
 
 		LastActivityTime: fastime.Now(),
 	}
